@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Comercial R9 - Perfect World</title>
+
+<style>
+:root {
+    --primary: #1e293b;
+    --accent: #2563eb;
+    --bg-input: #fff2cc;
+    --text: #334155;
+    --border: #cbd5e1;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px #00000012;
+}
+
+h1 {
+    color: var(--primary);
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.toggle-label { font-weight: bold; }
+
+.btn-group {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-toggle {
+    padding: 9px 20px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.btn-toggle.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.section-title {
+    font-size: 1.2em;
+    color: var(--primary);
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+    margin: 30px 0 15px;
+    font-weight: bold;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    min-width: 700px;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background: var(--primary);
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f1f5f9;
+}
+
+input {
+    width: 100%;
+    min-width: 75px;
+    padding: 7px;
+    border: 1px solid #94a3b8;
+    border-radius: 4px;
+    background: var(--bg-input);
+    font-size: 1em;
+    text-align: right;
+}
+
+input:focus {
+    outline: 2px solid var(--accent);
+}
+
+.result-cell {
+    font-weight: bold;
+    text-align: right;
+    color: #0f172a;
+    white-space: nowrap;
+}
+
+.center { text-align: center; }
+.right { text-align: right; }
+
+.total-box {
+    background: #e0f2fe;
+    border: 2px solid #bae6fd;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: right;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #0369a1;
+    margin-top: 25px;
+}
+
+@media(max-width:600px) {
+    .container { padding: 15px; }
+    h1 { font-size: 1.4em; }
+    .total-box { font-size: 1.1em; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Calculadora Rank 9</h1>
+
+<div class="subtitle">
+Insira os valores em amarelo para recalcular o orçamento automaticamente.
+</div>
+
+<div class="toggle-container">
+    <span class="toggle-label">
+        Incluir Anel no Cálculo do R9 Up1?
+    </span>
+
+    <div class="btn-group">
+        <button id="btn_anel_sim"
+        class="btn-toggle active"
+        onclick="setAnel(true)">SIM</button>
+
+        <button id="btn_anel_nao"
+        class="btn-toggle"
+        onclick="setAnel(false)">NÃO</button>
+    </div>
+</div>
+
+<!-- R9 UP1 -->
+
+<div class="section-title">
+ETAPA 1: R9 Up1 (Rank 9 Inicial)
+</div>
+
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+    <th>Material</th>
+    <th class="center">Total Necessário</th>
+    <th class="center">Preço Unitário</th>
+    <th class="center">No Baú</th>
+    <th class="center">Falta Comprar</th>
+    <th class="right">Custo Restante</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td>Símbolo do General Lotor</td>
+    <td id="req_lotor" class="center">205</td>
+    <td><input type="number" id="p_lotor" value="470000" min="0" oninput="calcular()"></td>
+    <td><input type="number" id="b_lotor" value="28" min="0" oninput="calcular()"></td>
+    <td id="f_lotor" class="center">177</td>
+    <td id="c_lotor" class="result-cell">83.190.000</td>
+</tr>
+
+<tr>
+    <td>Medalha da Glória</td>
+    <td id="req_med" class="center">32</td>
+    <td><input type="number" id="p_med" value="40000" min="0" oninput="calcular()"></td>
+    <td><input type="number" id="b_med" value="31" min="0" oninput="calcular()"></td>
+    <td id="f_med" class="center">1</td>
+    <td id="c_med" class="result-cell">40.000</td>
+</tr>
+
+<tr style="font-weight:bold;background:#f8fafc">
+    <td colspan="5" class="right">Subtotal R9 Up1:</td>
+    <td id="sub_up1" class="result-cell">83.230.000</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<!-- R9 UP2 -->
+
+<div class="section-title">
+ETAPA 2: R9 Up2 (Recast 2 com Arma)
+</div>
+
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+    <th>Material</th>
+    <th class="center">Total Necessário</th>
+    <th class="center">Preço Unitário</th>
+    <th class="center">No Baú</th>
+    <th class="center">Falta Comprar</th>
+    <th class="right">Custo Restante</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td>Moeda de Bronze (Doces)</td>
+    <td class="center">6.000</td>
+    <td><input type="number" id="p_bronze" value="6200" min="0" oninput="calcular()"></td>
+    <td><input type="number" id="b_bronze" value="4105" min="0" oninput="calcular()"></td>
+    <td id="f_bronze" class="center">1.895</td>
+    <td id="c_bronze" class="result-cell">11.749.000</td>
+</tr>
+
+<tr style="font-weight:bold;background:#f8fafc">
+    <td colspan="5" class="right">Subtotal R9 Up2:</td>
+    <td id="sub_up2" class="result-cell">11.749.000</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<!-- TOTAL -->
+
+<div class="total-box" id="total_geral">
+INVESTIMENTO LÍQUIDO TOTAL: 94.979.000 Moedas
+</div>
+
+</div>
+
+<script>
+
+let incluirAnel = true;
+
+function formatarMoeda(valor) {
+    return Math.round(valor).toLocaleString('pt-BR');
+}
+
+function obterValor(id) {
+    const valor = Number(document.getElementById(id).value);
+    return Number.isFinite(valor) ? Math.max(0, valor) : 0;
+}
+
+function setAnel(valor) {
+
+    incluirAnel = valor;
+
+    document.getElementById('btn_anel_sim')
+        .classList.toggle('active', valor);
+
+    document.getElementById('btn_anel_nao')
+        .classList.toggle('active', !valor);
+
+    calcular();
+}
+
+function calcular() {
+
+    // PREÇOS
+
+    const pLotor = obterValor('p_lotor');
+    const bLotor = obterValor('b_lotor');
+
+    const pMed = obterValor('p_med');
+    const bMed = obterValor('b_med');
+
+    const pBronze = obterValor('p_bronze');
+    const bBronze = obterValor('b_bronze');
+
+    // QUANTIDADES NECESSÁRIAS
+
+    const totalLotor = incluirAnel ? 205 : 173;
+    const totalMed = incluirAnel ? 32 : 28;
+
+    document.getElementById('req_lotor').innerText =
+        formatarMoeda(totalLotor);
+
+    document.getElementById('req_med').innerText =
+        formatarMoeda(totalMed);
+
+    // UP1
+
+    const fLotor = Math.max(0, totalLotor - bLotor);
+    const cLotor = fLotor * pLotor;
+
+    const fMed = Math.max(0, totalMed - bMed);
+    const cMed = fMed * pMed;
+
+    const subUp1 = cLotor + cMed;
+
+    // UP2
+
+    const totalBronze = 6000;
+
+    const fBronze = Math.max(0, totalBronze - bBronze);
+    const cBronze = fBronze * pBronze;
+
+    const subUp2 = cBronze;
+
+    // TOTAL GERAL
+
+    const totalGeral = subUp1 + subUp2;
+
+    // ATUALIZAR UP1
+
+    document.getElementById('f_lotor').innerText =
+        formatarMoeda(fLotor);
+
+    document.getElementById('c_lotor').innerText =
+        formatarMoeda(cLotor);
+
+    document.getElementById('f_med').innerText =
+        formatarMoeda(fMed);
+
+    document.getElementById('c_med').innerText =
+        formatarMoeda(cMed);
+
+    document.getElementById('sub_up1').innerText =
+        formatarMoeda(subUp1);
+
+    // ATUALIZAR UP2
+
+    document.getElementById('f_bronze').innerText =
+        formatarMoeda(fBronze);
+
+    document.getElementById('c_bronze').innerText =
+        formatarMoeda(cBronze);
+
+    document.getElementById('sub_up2').innerText =
+        formatarMoeda(subUp2);
+
+    // ATUALIZAR TOTAL
+
+    document.getElementById('total_geral').innerText =
+        'INVESTIMENTO LÍQUIDO TOTAL: ' +
+        formatarMoeda(totalGeral) + ' Moedas';
+
+}
+
+// CALCULAR AO ABRIR
+
+calcular();
+
+</script>
+
+</body>
+</html>
